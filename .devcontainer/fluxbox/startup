@@ -1,0 +1,19 @@
+#!/bin/sh
+xmodmap "/home/vscode/.Xmodmap"
+
+# Start fbautostart 
+which fbautostart > /dev/null
+if [ $? -eq 0 ]; then
+    fbautostart
+fi
+
+# Start XFCE
+startxfce4 &
+fbpid=$!
+
+# Start Tiled
+sleep 1
+{
+    /tiled/AppRun &
+} &
+wait $fbpid
